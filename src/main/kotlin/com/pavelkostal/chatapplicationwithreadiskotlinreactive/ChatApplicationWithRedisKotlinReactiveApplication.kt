@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class ChatApplicationWithReadisKotlinReactiveApplication
+class ChatApplicationWithRedisKotlinReactiveApplication
 
 fun main(args: Array<String>) {
-    runApplication<ChatApplicationWithReadisKotlinReactiveApplication>(*args)
+    runApplication<ChatApplicationWithRedisKotlinReactiveApplication>(*args)
 }

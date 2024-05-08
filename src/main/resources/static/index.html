@@ -79,7 +79,8 @@
             chatDiv.classList.remove('invisible');
             startControl.classList.add('invisible')
 
-            const uri = `ws://${window.location.hostname}:${window.location.port}/chat?room=${room}`;
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const uri = `${protocol}//${window.location.hostname}:${window.location.port}/chat?room=${room}`;
             const websocket = new WebSocket(uri);
 
             websocket.onmessage = (evt) => {

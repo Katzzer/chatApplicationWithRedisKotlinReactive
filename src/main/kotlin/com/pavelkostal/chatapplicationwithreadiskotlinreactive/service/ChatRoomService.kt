@@ -17,7 +17,6 @@ import java.net.URI
 @Service
 class ChatRoomService(private val client: RedissonReactiveClient) : WebSocketHandler {
 
-
     override fun handle(webSocketSession: WebSocketSession): Mono<Void> {
         val room = getChatRoomName(webSocketSession)
 

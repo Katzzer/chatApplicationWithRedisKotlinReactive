@@ -4,13 +4,16 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Mono
+import java.security.Principal
 
 @RestController
 @RequestMapping("test")
 class BasicController {
 
-    @GetMapping
-    fun hello(): Mono<String> {
-        return Mono.just("Hello for Heroku!!!")
+    @GetMapping()
+    fun hello(principal: Mono<Principal>): Mono<String> {
+        return principal
+            .map { it.name }
+            .map { username -> "Hello for Heroku!!! User: $username" }
     }
 }

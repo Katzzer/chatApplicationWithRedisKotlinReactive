@@ -17,8 +17,12 @@
           .form-control {
               background-color: #b3d7ff !important;
               color: #000 !important;
+              cursor: pointer !important;
           }
-          .form-control:read-only:hover {
+          .form-control#history {
+              cursor: default !important;
+          }
+          .form-control.read-only:hover {
               cursor: not-allowed !important;
           }
           .form-control.btn-secondary {
@@ -39,7 +43,7 @@
         <!-- Name Field -->
         <div class="input-group mb-3" >
           <span class="input-group-text" id="basic-addon1">Name</span>
-          <input type="text" class="form-control" placeholder="Name" id="name" th:value="${username}" readonly>
+          <input type="text" class="form-control read-only" placeholder="Name" id="name" th:value="${username}" readonly>
         </div>
 
         <!-- Room Field -->
@@ -67,6 +71,10 @@
             </div>
 
         </div>
+
+        <form action="/logout" method="post">
+            <input type="submit" value="Logout" />
+        </form>
         
     </div>
 

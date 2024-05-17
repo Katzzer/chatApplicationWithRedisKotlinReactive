@@ -11,8 +11,16 @@
           body {
               background-color: #184772 !important;
           }
+          h1 {
+              color: #fff;
+              padding-bottom: 20px;
+          }
           .input-group-text {
               font-weight: bold;
+          }
+          .title {
+              font-weight: bold;
+              color: #ffffff;
           }
           .form-control {
               background-color: #b3d7ff !important;
@@ -40,6 +48,8 @@
 
     <div class="container mt-5" >
 
+        <h1>Chat application with Redis</h1>
+
         <!-- Name Field -->
         <div class="input-group mb-3" >
           <span class="input-group-text" id="basic-addon1">Name</span>
@@ -59,7 +69,7 @@
         <div id="chat-div" class="invisible">
 
             <div class="mb-3">
-              <label for="history" class="form-label">Messages</label>
+              <label for="history" class="form-label title">Messages</label>
               <div class="form-control overflow-auto" style="height:250px;" id="history">
 
               </div>

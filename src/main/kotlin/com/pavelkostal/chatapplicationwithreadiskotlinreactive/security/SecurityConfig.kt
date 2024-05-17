@@ -24,9 +24,4 @@ class SecurityConfig(private val userDetailsService: ReactiveUserDetailsService)
             .and().build()
     }
 
-    @Bean
-    fun userDetailsService(): Mono<MapReactiveUserDetailsService> {
-        return userDetailsService.findByUsername("user")
-            .map { userDetails -> MapReactiveUserDetailsService(userDetails) }
-    }
 }

@@ -12,3 +12,7 @@
 
 ## How to run it
 - Run docker-compose.yml
+
+## Configuration of Redis server
+- Redis runs on https://app.redislabs.com/
+- To configure this app you need `SPRING_DATA_REDIS_HOST`, `SPRING_DATA_REDIS_PASSWORD` and `SPRING_DATA_REDIS_PORT`

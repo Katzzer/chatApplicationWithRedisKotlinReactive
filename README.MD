@@ -1,4 +1,4 @@
-# Chat application with Redis written in Kotlin and Spring Boot
+# Chat application with Redis written in Kotlin with Spring Boot
 
 ## Description
 - This is simple application that demonstrate chat application using Redis, Spring Boot with reactive Kotlin, Thymeleaf and Redis on AWS (not on localhost)

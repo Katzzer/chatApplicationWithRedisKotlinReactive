@@ -1,91 +1,57 @@
 <!doctype html>
-<html lang="en">
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-      <style>
-          body {
-              background-color: #184772 !important;
-          }
-          h1 {
-              color: #fff;
-              padding-bottom: 20px;
-          }
-          .input-group-text {
-              font-weight: bold;
-          }
-          .title {
-              font-weight: bold;
-              color: #ffffff;
-          }
-          .form-control {
-              background-color: #b3d7ff !important;
-              color: #000 !important;
-              cursor: pointer !important;
-          }
-          .form-control#history {
-              cursor: default !important;
-          }
-          .form-control.read-only:hover {
-              cursor: not-allowed !important;
-          }
-          .form-control.btn-secondary {
-              background-color: #3385ff !important;
-              border-color: #3385ff !important;
-          }
-          .activeUser {
-              color: red;
-          }
-      </style>
-
+    <link rel="stylesheet" href="/css/chat-styles.css">
     <title>Redis Chat Application Demo</title>
   </head>
-  <body style="background-color: #E5E7E9;">
+  <body>
+    <div class="chat-container">
+      <div class="chat-header">
+        <h1>Redis Chat Application</h1>
+        <p class="app-subtitle">Real-time messaging powered by Redis</p>
+      </div>
 
-    <div class="container mt-5" >
+      <!-- Name Field -->
+      <div class="form-group">
+        <div class="input-container">
+          <div class="input-label">Name</div>
+          <input type="text" class="form-input read-only" placeholder="Name" id="name" th:value="${username}" readonly>
+        </div>
+      </div>
 
-        <h1>Chat application with Redis</h1>
+      <!-- Room Field -->
+      <div class="form-group">
+        <div class="input-container">
+          <div class="input-label">Room</div>
+          <input type="text" class="form-input" placeholder="Room" id="room" th:value="${defaultRoom}">
+        </div>
+      </div>
 
-        <!-- Name Field -->
-        <div class="input-group mb-3" >
-          <span class="input-group-text" id="basic-addon1">Name</span>
-          <input type="text" class="form-control read-only" placeholder="Name" id="name" th:value="${username}" readonly>
+      <div class="form-group" id="start-control">
+        <button class="btn" type="button" id="start">Start</button>
+      </div>
+
+      <div id="chat-div" class="chat-area">
+        <label for="history" class="chat-messages-label">Messages</label>
+        <div class="chat-messages" id="history">
+          <!-- Messages will be added here dynamically -->
         </div>
 
-        <!-- Room Field -->
-        <div class="input-group mb-3">
-          <span class="input-group-text" id="basic-addon2">Room</span>
-          <input type="text" class="form-control" placeholder="Room" id="room" th:value="${defaultRoom}">
+        <div class="message-input-container">
+          <input type="text" class="message-input" placeholder="Type your message here" id="message">
+          <button class="btn send-btn" type="button" id="send" disabled>Send</button>
         </div>
-
-        <div class="mb-3" id="start-control">
-              <button class="form-control btn btn-secondary" type="button" id="start">Start</button>
-        </div>
-
-        <div id="chat-div" class="invisible">
-
-            <div class="mb-3">
-              <label for="history" class="form-label title">Messages</label>
-              <div class="form-control overflow-auto" style="height:250px;" id="history">
-
-              </div>
-            </div>
-
-            <div class="input-group mb-3">
-              <input type="text" class="form-control" placeholder="Type your message here" id="message">
-              <button class="btn btn-secondary" type="button" id="send" disabled>Send</button>
-            </div>
-
-        </div>
-
+      </div>
+      
+      <footer class="chat-footer">
+        <p>Created by <a href="http://www.pavelkostal.com" target="_blank">Pavel Kostal</a> &copy; 2025</p>
+      </footer>
     </div>
 
     <script type="text/javascript" th:inline="javascript">
-        const username =  [[${username}]];
+        const username = /*[[${username}]]*/ 'default-user';
         console.log(username);
 
         const roomInput = document.getElementById('room');
@@ -111,8 +77,8 @@
             const chatDiv = document.getElementById('chat-div');
             const startControl = document.getElementById('start-control');
 
-            chatDiv.classList.remove('invisible');
-            startControl.classList.add('invisible')
+            chatDiv.classList.add('visible');
+            startControl.style.display = 'none';
 
             const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
             const uri = `${protocol}//${window.location.hostname}:${window.location.port}/chat?room=${room}`;
@@ -121,45 +87,54 @@
             websocket.onmessage = (evt) => {
                 let obj = JSON.parse(evt.data);
                 let ele = document.createElement("p");
+                ele.className = 'message';
 
                 if (obj.sender === username) {
-                    ele.className='activeUser';
+                    ele.classList.add('user-message');
                 }
 
                 ele.innerHTML = `<b>${obj.sender}:</b>&nbsp;${obj.message}`;
                 history.appendChild(ele);
+                history.scrollTop = history.scrollHeight; // Auto-scroll to bottom
             }
 
-            websocket.onopen = (evt) => {
+            websocket.onopen = () => {
                 let ele = document.createElement("p");
+                ele.className = 'system-message';
                 ele.innerHTML = `<b>CONNECTED</b>`;
                 history.appendChild(ele);
             }
 
-            websocket.onclose = (evt) => {
+            websocket.onclose = () => {
                 let ele = document.createElement("p");
+                ele.className = 'system-message';
                 ele.innerHTML = `<b>DISCONNECTED</b>`;
                 history.appendChild(ele);
             }
 
             const sendMessage = () => {
+                if (!message.value.trim()) return;
+                
                 let obj = {
                     sender: name,
                     message: message.value
                 }
                 message.value = '';
                 websocket.send(JSON.stringify(obj));
+                message.focus();
             }
+            
             send.addEventListener('click', sendMessage);
+            
+            // Add the ability to send a message with an Enter key
+            message.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
         }
 
         document.getElementById('start').addEventListener('click', chatFunction);
-
-
-
     </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
   </body>
 </html>

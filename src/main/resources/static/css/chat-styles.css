@@ -161,7 +161,7 @@ body {
 
 .chat-messages-label {
     font-weight: 600;
-    color: var(--primary-dark);
+    color: var(--light-text);
     margin-bottom: 10px;
     display: block;
 }

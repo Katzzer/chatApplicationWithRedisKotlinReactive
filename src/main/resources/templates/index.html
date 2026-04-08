@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="/redis.ico">
+    <link rel="icon" type="image/png" href="/redis.png">
     <link rel="stylesheet" href="/css/chat-styles.css">
     <title>Redis Chat Application Demo</title>
   </head>
@@ -12,6 +12,9 @@
       <div class="chat-header">
         <h1>Redis Chat Application</h1>
         <p class="app-subtitle">Real-time messaging powered by Redis</p>
+        <form th:action="@{/logout}" method="post" style="margin-top: 12px;">
+          <button type="submit" class="btn-logout">Logout</button>
+        </form>
       </div>
 
       <!-- Name Field -->

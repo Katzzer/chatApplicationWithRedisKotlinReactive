@@ -231,6 +231,25 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* Logout Button */
+.btn-logout {
+    padding: 7px 18px;
+    background-color: transparent;
+    color: #94a3b8;
+    border: 1.5px solid #475569;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.btn-logout:hover {
+    background-color: #b91c1c;
+    border-color: #b91c1c;
+    color: #fff;
+}
+
 /* Footer */
 .chat-footer {
     margin-top: 30px;

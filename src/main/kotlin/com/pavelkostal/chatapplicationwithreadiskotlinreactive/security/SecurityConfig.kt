@@ -18,7 +18,7 @@ class SecurityConfig(private val userDetailsService: ReactiveUserDetailsService)
     fun securityWebFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain {
         return http
             .authorizeExchange()
-            .pathMatchers("/welcome").permitAll()
+            .pathMatchers("/welcome", "/health").permitAll()
             .anyExchange().authenticated()
             .and().httpBasic()
             .and().build()
